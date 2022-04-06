@@ -1,7 +1,8 @@
 {
   "homePage": "https://userinyerface.com/",
   "testLogin": "Qwerty1234",
-  "testPassword": "qwerty1234",
+  "testPassword": "Qwerty1234",
   "testDomain": "gmail",
-  "uploadFileName": "test.png"
+  "uploadFileName": "test.png",
+  "timerValue": "00:00:00"
 }

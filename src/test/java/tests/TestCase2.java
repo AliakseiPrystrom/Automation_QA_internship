@@ -11,14 +11,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestCase2 extends BaseTest {
-    private final ISettingsFile environment = new JsonSettingsFile("testdata.json");
+    private final ISettingsFile configData = new JsonSettingsFile("config.json");
+
 
     @BeforeMethod
     @Override
     protected void beforeMethod() {
         AqualityServices.getBrowser().getDriver().manage().window().maximize();
         Browser browser = AqualityServices.getBrowser();
-        browser.goTo(environment.getValue("/homePage").toString());
+        browser.goTo(configData.getValue("/homePage").toString());
         browser.waitForPageToLoad();
     }
 
@@ -27,7 +28,7 @@ public class TestCase2 extends BaseTest {
         Browser browser = AqualityServices.getBrowser();
         browser.waitForPageToLoad();
         WelcomePageForm wpf = new WelcomePageForm();
-        Assert.assertTrue(wpf.state().isDisplayed(), "Page did not open");
+        Assert.assertTrue(wpf.state().waitForDisplayed(), "Page did not open");
         wpf.goGameLink();
         browser.waitForPageToLoad();
         HelpForm helpForm = new HelpForm();

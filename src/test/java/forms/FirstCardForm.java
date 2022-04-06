@@ -3,47 +3,56 @@ package forms;
 import aquality.selenium.elements.interfaces.*;
 import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
-import utils.WorkWithDomain;
 
 public class FirstCardForm extends Form {
 
-    private final ITextBox passwordInput = getElementFactory().getTextBox(By.xpath("//input[@placeholder='Choose Password']"),"password input");
-    private final ITextBox emailInput = getElementFactory().getTextBox(By.xpath("//input[@placeholder='Your email']"),"email input");
-    private final ITextBox domainInput = getElementFactory().getTextBox(By.xpath("//input[@placeholder='Domain']"),"domain input");
-    private final IComboBox otherSelectCB = getElementFactory().getComboBox(By.xpath("//div[@class='dropdown__field']"),"other select CB");
-    private final ICheckBox licenseCB = getElementFactory().getCheckBox(By.xpath("//span[@class='icon icon-check checkbox__check']"),"acceptLicence");
-    private final ILink goNextCard = getElementFactory().getLink(By.xpath("//a[@class='button--secondary']"),"go next card");
+    private final ITextBox passwordInput = getElementFactory().getTextBox(By.xpath("//input[@placeholder='Choose Password']"), "password input");
+    private final ITextBox emailInput = getElementFactory().getTextBox(By.xpath("//input[@placeholder='Your email']"), "email input");
+    private final ITextBox domainInput = getElementFactory().getTextBox(By.xpath("//input[@placeholder='Domain']"), "domain input");
+    private final IComboBox otherSelectCB = getElementFactory().getComboBox(By.xpath("//div[@class='dropdown__field']"), "other select CB");
+    private final ICheckBox licenseCB = getElementFactory().getCheckBox(By.xpath("//span[@class='icon icon-check checkbox__check']"), "acceptLicence");
+    private final ILink goNextCard = getElementFactory().getLink(By.xpath("//a[@class='button--secondary']"), "go next card");
+    private static final String domain = "//div[@class='dropdown__list-item' and contains(text(), '%s')]";
+
 
     public FirstCardForm() {
         super(By.xpath("//div[@class='login-form__container']"), "loginCard");
     }
 
-    public void clearPasswordFieldAndType(String password){
+    public static By getDomain(String valueFromTestdata) {
+        return By.xpath(String.format(domain, valueFromTestdata));
+    }
+
+    public ILabel getDomainLabel(String valueFromTestdata) {
+        return getElementFactory().getLabel(getDomain(valueFromTestdata.toLowerCase()), "select domain value");
+    }
+
+    public void clearPasswordFieldAndType(String password) {
         passwordInput.clearAndType(password);
     }
 
-    public void clearEmailFieldAndType(String email){
+    public void clearEmailFieldAndType(String email) {
         emailInput.clearAndType(email);
     }
 
-    public void clearDomainAndTYpe(String damain){
+    public void clearDomainAndTYpe(String damain) {
         domainInput.clearAndType(damain);
     }
 
-    public void otherSelect(){
+    public void otherSelect() {
         otherSelectCB.click();
     }
 
-    public void otherValueSelect(String domainValue){
+    public void otherValueSelect(String domainValue) {
 
-        WorkWithDomain.getDomainLabel(domainValue).click();
+        getDomainLabel(domainValue).click();
     }
 
-    public void useLicenseCheckBox(){
+    public void useLicenseCheckBox() {
         licenseCB.click();
     }
 
-    public void goNextCard(){
+    public void goNextCard() {
         goNextCard.click();
     }
 }

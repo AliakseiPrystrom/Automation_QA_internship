@@ -6,15 +6,15 @@ import org.openqa.selenium.By;
 
 public class CookieForm extends Form {
 
-    private final IButton acceptCookie = getElementFactory().getButton(By.xpath("//button[@class='button button--solid button--transparent']"), "accept cookie");
+    private final IButton acceptCookieButton = getElementFactory().getButton(By.xpath("//button[@class='button button--solid button--transparent' and contains (@type,'button') and contains(@name,'button')]"), "accept cookie");
 
 
     public CookieForm() {
-        super(By.xpath("//div[@class='cookies']"), "cookie form");
+        super(By.className("cookies"), "cookie form");
     }
 
     public void acceptCookie() {
-        acceptCookie.click();
+        acceptCookieButton.click();
     }
 
 }

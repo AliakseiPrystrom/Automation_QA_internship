@@ -12,16 +12,20 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utils.Domains;
+import utils.WorkWithParams;
+import utils.WorkWithUpload;
 
 public class TestCase1 extends BaseTest {
     private final ISettingsFile environment = new JsonSettingsFile("testdata.json");
+    private final ISettingsFile configData = new JsonSettingsFile("config.json");
+    private final boolean isParamTest = false;
 
     @BeforeMethod
     @Override
     protected void beforeMethod() {
         AqualityServices.getBrowser().getDriver().manage().window().maximize();
         Browser browser = AqualityServices.getBrowser();
-        browser.goTo(environment.getValue("/homePage").toString());
+        browser.goTo(configData.getValue("/homePage").toString());
         browser.waitForPageToLoad();
     }
 
@@ -30,13 +34,13 @@ public class TestCase1 extends BaseTest {
         Browser browser = AqualityServices.getBrowser();
         browser.waitForPageToLoad();
         WelcomePageForm wpf = new WelcomePageForm();
-        Assert.assertTrue(wpf.state().isDisplayed(), "Page did not open");
+        Assert.assertTrue(wpf.state().waitForDisplayed(), "Page did not open");
         wpf.goGameLink();
         browser.waitForPageToLoad();
         FirstCardForm firstCard = new FirstCardForm();
-        Assert.assertTrue(firstCard.state().isDisplayed(), "Card did not open");
-        firstCard.clearPasswordFieldAndType(environment.getValue("/testLogin").toString());
-        firstCard.clearEmailFieldAndType(environment.getValue("/testPassword").toString());
+        Assert.assertTrue(firstCard.state().waitForDisplayed(), "Card did not open");
+        firstCard.clearPasswordFieldAndType(WorkWithParams.chooseTestParamsForPass(isParamTest));
+        firstCard.clearEmailFieldAndType(WorkWithParams.chooseTestParamsForLogin(isParamTest));
         firstCard.clearDomainAndTYpe(environment.getValue("/testDomain").toString());
         firstCard.otherSelect();
         firstCard.otherValueSelect(Domains.COM.toString());
@@ -44,15 +48,15 @@ public class TestCase1 extends BaseTest {
         firstCard.goNextCard();
         browser.waitForPageToLoad();
         SecondCard secondCard = new SecondCard();
-        Assert.assertTrue(secondCard.state().isDisplayed(), "Card did not open");
+        Assert.assertTrue(secondCard.state().waitForDisplayed(), "Card did not open");
         secondCard.resetAllCB();
         secondCard.selectCB(3);
         secondCard.clickUpload();
-        secondCard.uploadFile(environment.getValue("/uploadFileName").toString());
+        WorkWithUpload.uploadFile(environment.getValue("/uploadFileName").toString());
         secondCard.goNextCard();
         browser.waitForPageToLoad();
         ThirdCardForm thirdCard = new ThirdCardForm();
-        Assert.assertTrue(thirdCard.state().isDisplayed(), "Card did not open");
+        Assert.assertTrue(thirdCard.state().waitForDisplayed(), "Card did not open");
     }
 
 

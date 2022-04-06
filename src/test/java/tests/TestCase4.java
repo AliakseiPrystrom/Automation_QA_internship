@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 
 public class TestCase4 extends BaseTest {
+    private final ISettingsFile configData = new JsonSettingsFile("config.json");
     private final ISettingsFile environment = new JsonSettingsFile("testdata.json");
 
     @BeforeMethod
@@ -19,7 +20,7 @@ public class TestCase4 extends BaseTest {
     protected void beforeMethod() {
         AqualityServices.getBrowser().getDriver().manage().window().maximize();
         Browser browser = AqualityServices.getBrowser();
-        browser.goTo(environment.getValue("/homePage").toString());
+        browser.goTo(configData.getValue("/homePage").toString());
         browser.waitForPageToLoad();
     }
 
@@ -31,7 +32,7 @@ public class TestCase4 extends BaseTest {
         wpf.goGameLink();
         browser.waitForPageToLoad();
         GamePageForm gpf = new GamePageForm();
-        Assert.assertTrue(gpf.isTimerOK(),"Timer did not start from 00:00");
+        Assert.assertEquals(environment.getValue("/timerValue"), gpf.getTimerValue(), "Timer did not start from 00:00");
     }
 
 }
