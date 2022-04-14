@@ -5,17 +5,16 @@ import util.GetConnection;
 import util.ReturnQuery;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ProjectDaoImpl implements ProjectDao {
     @Override
     public void addProject(Project project) {
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "INSERT project VALUES (default,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, project.getName());
-            statement.execute();
+            String sql = ReturnQuery.addProject(project.getName());
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }

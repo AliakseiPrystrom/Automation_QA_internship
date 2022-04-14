@@ -20,8 +20,7 @@ public class TestCase1 {
     }
 
     @AfterClass
-    public void checkTest(){
-        System.out.println(beforeInsert+1);
+    public void checkTest() {
         Assert.assertTrue(dao.checkTestInDB(beforeInsert+1), "Test result did not insert");
     }
 

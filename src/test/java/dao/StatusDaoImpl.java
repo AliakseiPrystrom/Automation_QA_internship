@@ -5,17 +5,16 @@ import util.GetConnection;
 import util.ReturnQuery;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class StatusDaoImpl implements StatusDao {
     @Override
     public void addStatus(Status status) {
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "INSERT status VALUES (default,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, status.getName());
-            statement.execute();
+            String sql = ReturnQuery.addStatus(status.getName());
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -28,7 +27,7 @@ public class StatusDaoImpl implements StatusDao {
 
     @Override
     public void deleteStatusId(int id) {
-        ReturnQuery.deleteFromTableId("status",id);
+        ReturnQuery.deleteFromTableId("status", id);
     }
 
     @Override

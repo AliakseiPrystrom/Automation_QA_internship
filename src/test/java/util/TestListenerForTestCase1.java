@@ -1,5 +1,7 @@
 package util;
 
+import aquality.selenium.core.utilities.ISettingsFile;
+import aquality.selenium.core.utilities.JsonSettingsFile;
 import dao.*;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -15,8 +17,8 @@ public class TestListenerForTestCase1 implements ITestListener {
     private final AuthorDaoImpl daoAuthor = new AuthorDaoImpl();
     private final ProjectDaoImpl daoProject = new ProjectDaoImpl();
     private final SessionDaoImpl daoSession = new SessionDaoImpl();
-    private final StatusDaoImpl daoStatus = new StatusDaoImpl();
     private final TestDaoImpl daoTest = new TestDaoImpl();
+    private final ISettingsFile  environment = new JsonSettingsFile("settings.json");
 
 
     @Override
@@ -27,14 +29,14 @@ public class TestListenerForTestCase1 implements ITestListener {
                 "testLogin" + GenerationDataForTest.generateNameLoginPassMail(),
                 "testEmail" + GenerationDataForTest.generateNameLoginPassMail()));
         test.setAuthor_id(daoAuthor.returnLastAddedId());
-        test.setBrowser("anyBrowser");
+        test.setBrowser(environment.getValue("/browserName").toString());
         test.setStart_time(Timestamp.valueOf(LocalDateTime.now()));
         test.setEnv("anyNode" + GenerationDataForTest.generateNameLoginPassMail());
         test.setMethod_name(iTestResult.getMethod().getMethodName());
         test.setName(iTestResult.getName());
         daoProject.addProject(new Project("testProject" + GenerationDataForTest.generateNameLoginPassMail()));
         test.setProject_id(daoProject.returnLastAddedId());
-        daoSession.addSession(new Session("uniqSessinoKey" + GenerationDataForTest.generateNameLoginPassMail(), 147));
+        daoSession.addSession(new Session("uniqSessinoKey" + GenerationDataForTest.generateNameLoginPassMail(), GenerationDataForTest.generateRandomIntValue()));
         test.setSession_id(daoSession.returnLastAddedId());
 
 
@@ -42,26 +44,17 @@ public class TestListenerForTestCase1 implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        daoStatus.addStatus(new Status("Success"));
-        test.setStatus_id(iTestResult.getStatus());
-        test.setEnd_time(Timestamp.valueOf(LocalDateTime.now()));
-        daoTest.addTest(test);
+        ListenerUtil.onTestForTC_One(iTestResult,test);
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        daoStatus.addStatus(new Status("Failure"));
-        test.setStatus_id(iTestResult.getStatus());
-        test.setEnd_time(Timestamp.valueOf(LocalDateTime.now()));
-        daoTest.addTest(test);
+        ListenerUtil.onTestForTC_One(iTestResult,test);
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        daoStatus.addStatus(new Status("Skipped"));
-        test.setStatus_id(iTestResult.getStatus());
-        test.setEnd_time(Timestamp.valueOf(LocalDateTime.now()));
-        daoTest.addTest(test);
+        ListenerUtil.onTestForTC_One(iTestResult,test);
     }
 
     @Override

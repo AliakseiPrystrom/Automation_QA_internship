@@ -13,29 +13,21 @@ public class TestDaoImpl implements TestDao {
     @Override
     public void addTest(Test test) {
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "INSERT INTO test(id, name, status_id, method_name, project_id, session_id, start_time, " +
-                    "end_time, env, browser, author_id) VALUES (default,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, test.getName());
-            statement.setInt(2, test.getStatus_id());
-            statement.setString(3, test.getMethod_name());
-            statement.setInt(4, test.getProject_id());
-            statement.setInt(5, test.getSession_id());
-            statement.setTimestamp(6, test.getStart_time());
-            statement.setTimestamp(7, test.getEnd_time());
-            statement.setString(8, test.getEnv());
-            statement.setString(9, test.getBrowser());
-            statement.setInt(10, test.getAuthor_id());
-            statement.execute();
+            String sql = ReturnQuery.addTest(
+                    test.getName(), test.getStatus_id(), test.getMethod_name(), test.getProject_id(), test.getSession_id(),
+                    test.getStart_time(), test.getEnd_time(), test.getEnv(), test.getBrowser(), test.getAuthor_id());
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+
     @Override
     public boolean checkTestInDB(int id) {
 
-        return getTest(id).getId() !=0;
+        return getTest(id).getId() != 0;
     }
 
     @Override
@@ -62,7 +54,7 @@ public class TestDaoImpl implements TestDao {
     public Test getTest(int id) {
         Test test = new Test();
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "SELECT * FROM test WHERE id =" + id;
+            String sql = ReturnQuery.getQueryById("test", id);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
@@ -96,21 +88,12 @@ public class TestDaoImpl implements TestDao {
     @Override
     public void updateTest(Test test) {
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "UPDATE test SET name = ?, status_id = ?, method_name = ?, project_id = ?, " +
-                    "session_id = ?, start_time = ?, end_time = ?, env = ?, browser = ?, author_id = ? WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, test.getName());
-            statement.setInt(2, test.getStatus_id());
-            statement.setString(3, test.getMethod_name());
-            statement.setInt(4, test.getProject_id());
-            statement.setInt(5, test.getSession_id());
-            statement.setTimestamp(6, test.getStart_time());
-            statement.setTimestamp(7, test.getEnd_time());
-            statement.setString(8, test.getEnv());
-            statement.setString(9, test.getBrowser());
-            statement.setInt(10, test.getAuthor_id());
-            statement.setInt(11, test.getId());
-            statement.execute();
+            String sql = ReturnQuery.updateTest(
+                    test.getName(), test.getStatus_id(), test.getMethod_name(), test.getProject_id(), test.getSession_id(),
+                    test.getStart_time(), test.getEnd_time(), test.getEnv(), test.getBrowser(), test.getAuthor_id(), test.getId()
+            );
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -138,13 +121,13 @@ public class TestDaoImpl implements TestDao {
         return list;
     }
 
-    public int checkIdInTests(List<Test> list){
-        List<Test>getAll=getAllTests();
+    public int checkIdInTests(List<Test> list) {
+        List<Test> getAll = getAllTests();
         int valueOfIsExistID = 0;
         for (Test test : getAll) {
             for (Test test1 : list) {
-                if (test.getId()==test1.getId()){
-                    valueOfIsExistID+=1;
+                if (test.getId() == test1.getId()) {
+                    valueOfIsExistID += 1;
                 }
             }
         }

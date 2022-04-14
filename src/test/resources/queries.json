@@ -1,0 +1,12 @@
+{
+  "getById": "SELECT * FROM %s WHERE id = %s",
+  "deleteById": "DELETE FROM %s WHERE id = %s",
+  "getAll": "SELECT * FROM %s",
+  "addAuthor": "INSERT INTO author VALUES ('0', '%s', '%s', '%s')",
+  "addTest": "INSERT INTO test VALUES ('0', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+  "addSession": "INSERT INTO session VALUES ('0','%s',now(),'%s')",
+  "addProject": "INSERT INTO project VALUES ('0','%s')",
+  "addStatus": "INSERT INTO status VALUES ('0','%s')",
+  "updateAuthor": "UPDATE author SET name = '%s', login = '%s', email = '%s' WHERE id = '%s'",
+  "updateTest": "UPDATE test SET name = '%s', status_id = '%s', method_name = '%s', project_id = '%s', session_id = '%s', start_time = '%s', end_time = '%s', env = '%s', browser = '%s', author_id = '%s' WHERE id = '%s'"
+}

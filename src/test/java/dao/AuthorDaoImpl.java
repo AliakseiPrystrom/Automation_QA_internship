@@ -13,12 +13,9 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public void addAuthor(Author author) {
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "INSERT author VALUES (default,?,?,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, author.getName());
-            statement.setString(2, author.getLogin());
-            statement.setString(3, author.getEmail());
-            statement.execute();
+            Statement statement = connection.createStatement();
+            String sql = ReturnQuery.addAuthor(author.getName(), author.getLogin(), author.getEmail());
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -26,12 +23,12 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public boolean checkAuthorInDB(int id) {
-        return getAuthor(id).getId()!=0;
+        return getAuthor(id).getId() != 0;
     }
 
     @Override
     public void deleteAuthorId(int id) {
-        ReturnQuery.deleteFromTableId("author",id);
+        ReturnQuery.deleteFromTableId("author", id);
     }
 
     @Override
@@ -42,9 +39,8 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public void deleteAuthor(Author author) {
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "DELETE FROM author WHERE id = ?";
+            String sql = ReturnQuery.deleteQueryById("author", author.getId());
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, author.getId());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,7 +51,7 @@ public class AuthorDaoImpl implements AuthorDao {
     public Author getAuthor(int id) {
         Author author = new Author();
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "SELECT * FROM author WHERE id =" + id;
+            String sql = ReturnQuery.getQueryById("author", id);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
@@ -70,11 +66,12 @@ public class AuthorDaoImpl implements AuthorDao {
         return author;
     }
 
+
     @Override
     public List<Author> getAllAuthors() {
         List<Author> list = new ArrayList<>();
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "SELECT * FROM author";
+            String sql = ReturnQuery.getAll("author");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
@@ -94,12 +91,8 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public void updateAuthor(Author author) {
         try (Connection connection = GetConnection.getConnection()) {
-            String sql = "UPDATE author SET name = ?, login = ?, email = ? WHERE id = ?";
+            String sql = ReturnQuery.updateAuthor(author.getName(), author.getLogin(), author.getEmail(), author.getId());
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, author.getName());
-            statement.setString(2, author.getLogin());
-            statement.setString(3, author.getEmail());
-            statement.setInt(4, author.getId());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -110,4 +103,5 @@ public class AuthorDaoImpl implements AuthorDao {
     public int returnLastAddedId() {
         return ReturnQuery.returnId("author");
     }
+
 }
