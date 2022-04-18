@@ -1,0 +1,9 @@
+{
+  "ApiPath": "https://jsonplaceholder.typicode.com.",
+  "PathForStepOne": "https://jsonplaceholder.typicode.com/posts",
+  "PathForStepTwo": "https://jsonplaceholder.typicode.com/posts/99",
+  "PathForStepThree": "https://jsonplaceholder.typicode.com/posts/150",
+  "PathForStepFour": "https://jsonplaceholder.typicode.com/posts",
+  "PathForStepFive": "https://jsonplaceholder.typicode.com/users",
+  "PathForStepSix": "https://jsonplaceholder.typicode.com/users/5"
+}
