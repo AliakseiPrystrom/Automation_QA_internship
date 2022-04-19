@@ -1,6 +1,6 @@
 package util;
 
-import api_for5step.Root;
+import api_for5step.User;
 import aquality.selenium.core.utilities.ISettingsFile;
 import aquality.selenium.core.utilities.JsonSettingsFile;
 import org.apache.commons.io.IOUtils;
@@ -24,7 +24,7 @@ public class Utils {
         String stringAfterSort = "";
 
         try {
-            HttpResponse response = Request.Get(environment.getValue("/PathForStepOne").toString()).execute().returnResponse();
+            HttpResponse response = Request.Get(Utils.getCurrentURL(environment.getValue("/postsRoute").toString())).execute().returnResponse();
             List<Integer> listId = new ArrayList<>();
             JSONArray jsonResponse = new JSONArray(IOUtils.toString(response.getEntity().getContent()));
 
@@ -68,15 +68,19 @@ public class Utils {
         return json;
     }
 
-    public static Root returnRootFromFiveStep(){
-        List<Root> users = given().
+    public static User returnRootFromFiveStep(){
+        List<User> users = given().
         when().
                 contentType(JSON).
-                get(environment.getValue("/PathForStepFive").toString()).
+                get(Utils.getCurrentURL(environment.getValue("/PathForStepFive").toString())).
                 then().
                 log().all().
-                extract().body().jsonPath().getList("", Root.class);
+                extract().body().jsonPath().getList("", User.class);
         return users.get(4);
+    }
+
+    public static String getCurrentURL(String req){
+        return String.format(environment.getValue("/ApiPath").toString()+"%s",req);
     }
 
 }

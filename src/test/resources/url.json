@@ -1,9 +1,8 @@
 {
-  "ApiPath": "https://jsonplaceholder.typicode.com.",
-  "PathForStepOne": "https://jsonplaceholder.typicode.com/posts",
-  "PathForStepTwo": "https://jsonplaceholder.typicode.com/posts/99",
-  "PathForStepThree": "https://jsonplaceholder.typicode.com/posts/150",
-  "PathForStepFour": "https://jsonplaceholder.typicode.com/posts",
-  "PathForStepFive": "https://jsonplaceholder.typicode.com/users",
-  "PathForStepSix": "https://jsonplaceholder.typicode.com/users/5"
+  "postsRoute": "/posts",
+  "99post": "/posts/99",
+  "150post": "/posts/150",
+  "PathForStepFive": "/users",
+  "PathForStepSix": "/users/5",
+  "ApiPath": "https://jsonplaceholder.typicode.com"
 }

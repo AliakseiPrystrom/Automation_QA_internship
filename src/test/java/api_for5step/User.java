@@ -2,7 +2,7 @@ package api_for5step;
 
 import java.util.Objects;
 
-public class Root {
+public class User {
     private Integer id;
     private String name;
     private String username;
@@ -12,7 +12,7 @@ public class Root {
     private String website;
     private Company company;
 
-    public Root(Integer id, String name, String username, String email, Address address, String phone, String website, Company company) {
+    public User(Integer id, String name, String username, String email, Address address, String phone, String website, Company company) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -23,7 +23,7 @@ public class Root {
         this.company = company;
     }
 
-    public Root() {
+    public User() {
     }
 
     public void setId(Integer id) {
@@ -108,8 +108,8 @@ public class Root {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Root root = (Root) o;
-        return Objects.equals(id, root.id) && Objects.equals(name, root.name) && Objects.equals(username, root.username) && Objects.equals(email, root.email) && Objects.equals(address, root.address) && Objects.equals(phone, root.phone) && Objects.equals(website, root.website) && Objects.equals(company, root.company);
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(address, user.address) && Objects.equals(phone, user.phone) && Objects.equals(website, user.website) && Objects.equals(company, user.company);
     }
 
     @Override
