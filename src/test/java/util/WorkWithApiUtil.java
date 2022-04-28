@@ -3,7 +3,7 @@ package util;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-public class WorkWithApi {
+public class WorkWithApiUtil {
 
     public static Response doPost(String url,String body){
         return RestAssured.

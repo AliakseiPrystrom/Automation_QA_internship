@@ -1,7 +1,6 @@
 {
   "postsRoute": "/posts",
-  "99post": "/posts/99",
-  "150post": "/posts/150",
+  "postWithValue": "/posts/%s",
   "PathForStepFive": "/users",
   "PathForStepSix": "/users/5",
   "ApiPath": "https://jsonplaceholder.typicode.com"
