@@ -1,3 +1,4 @@
 {
-  "homePage": "https://vk.com"
+  "homePage": "https://vk.com",
+  "baseApiUrl": "https://api.vk.com"
 }

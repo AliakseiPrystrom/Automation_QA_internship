@@ -9,12 +9,12 @@ import java.io.File;
 import java.util.Map;
 
 public class ApiUtils {
-    private static final ISettingsFile urls = new JsonSettingsFile("url.json");
+    private static final ISettingsFile config = new JsonSettingsFile("config.json");
 
     public static Response doPost(String url, Map<String, String> params) {
         return RestAssured
                 .given()
-                .baseUri(urls.getValue("/baseApiUrl").toString())
+                .baseUri(config.getValue("/baseApiUrl").toString())
                 .params(params)
                 .when()
                 .post(url);
@@ -23,7 +23,7 @@ public class ApiUtils {
     public static Response doPostUpload(String mediaUrl, File file, String param) {
         return RestAssured
                 .given()
-                .baseUri(urls.getValue("/baseApiUrl").toString())
+                .baseUri(config.getValue("/baseApiUrl").toString())
                 .header("photo", param)
                 .multiPart("file", file)
                 .when()

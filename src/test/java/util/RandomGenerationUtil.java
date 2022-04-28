@@ -2,7 +2,7 @@ package util;
 
 import java.util.Random;
 
-public class RandomGeneration {
+public class RandomGenerationUtil {
     private static final String DICT = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final Random random = new Random();
 

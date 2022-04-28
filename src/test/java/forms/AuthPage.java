@@ -16,13 +16,22 @@ public class AuthPage extends Form {
         super(By.xpath("//div[@class='vkc__Auth__pageBox']"), "authPAge");
     }
 
-    public void inputLoginAndSubmit(String login) {
+
+    public void inputLogin(String login) {
         loginInput.clearAndType(login);
+
+    }
+
+    public void afterLoginSubmit() {
         submitLogin.click();
     }
 
-    public void inputPasswordAndSubmit(String password) {
+    public void inputPassword(String password) {
         passwordInput.clearAndType(password);
+
+    }
+
+    public void afterPasswordSubmit() {
         submitPassword.click();
     }
 

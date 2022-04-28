@@ -1,4 +1,0 @@
-{
-  "isAddPost": "//div[@data-post-id='%s_%s']",
-  "isPhotoUpload": "//a[@href='/photo%s_%s']"
-}
